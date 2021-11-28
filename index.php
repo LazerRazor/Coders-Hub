@@ -61,8 +61,16 @@
         <br>
         <h6>We will take you from <span class="begin">BEGINNER</span> to <span class="end">BEYOND</span></h6>
         <br>
-        <a href="http://localhost/login/login.php"><button type="button" class="btn-lg btn-outline-light hello">Join Us!</button>
-        </a>
+
+        <?php 
+         
+         if(!isset($_SESSION['username'])){
+           echo ' <a href="login.php"><button type="button" class="btn-lg btn-outline-light hello">Join Us!</button>
+           </div></a>';
+         }
+         
+         
+         ?>
           
       </div>
       

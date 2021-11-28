@@ -18,6 +18,22 @@
 <?php
         include 'partials/_dbconnect.php';
   ?>
+     <?php
+$method =$_SERVER['REQUEST_METHOD'];
+$posty = false;
+if($method=='POST'){
+  $posty=true;
+  $title = $_POST['title'];
+  $desc = $_POST['desc'];
+  $sql =   "INSERT INTO `threads` (`threads_id`,`threads_title`, `threads_desc`, `timestamp`, `threads_user_id`, `threads_cat_id`) VALUES (NULL,'$title', '$desc', current_timestamp(), '0', '2')";     
+  $result = mysqli_query($conn, $sql);
+}
+if($posty){
+  echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Holy guacamole!</strong> Your Question Has Been Successfully Submitted
+ 
+</div>';
+}?>
   <section id="title">
     <div class="container-fluid">
       <!-- Nav Bar -->
@@ -31,7 +47,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="index.php">Home</a>
               </li>
             <li class="nav-item">
               <a class="nav-link" href="languages.html">Languages</a>
@@ -61,13 +77,7 @@
         <br>
         <br>
         <h2 style = "text-align:center">Top Questions</h2>
-        <br>
        
-        <br>
-        <form style="margin-left:10%"class="d-flex col-lg-10">
-            <input class="form-control me-2 " type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
     
         <br>
         <br>
@@ -81,9 +91,9 @@
     echo '<div class="col-sm-6 my-3">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">'.$row['threads_title'].'</h5>
+        <h3 class="card-title">'.$row['threads_title'].'</h3>
         <p class="card-text"> '.$row['threads_desc'].'</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a href="answers.php?thread_id='.$row['threads_id'].'" class="btn btn-primary">See Answers</a>
       </div>
     </div>
   </div>';
@@ -98,6 +108,9 @@ if($check){
   
   ?>
            
+  
+  
+           
        
   
     </div>
@@ -111,21 +124,19 @@ if($check){
         <br>
         <br>
         <br>
-        <form>
+        <form <?php echo "cppforum.php?catid=2"; ?> method="post">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              <label for="exampleInputEmail1" class="form-label">Question Title</label>
+              <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp">
             </div>
           <br>
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Enter Your Doubt</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <label for="exampleFormControlTextarea1" class="form-label">Please Describe Your Question</label>
+                <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
               </div>
          <br>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
-     
         <br>
         <br>
         <br>
